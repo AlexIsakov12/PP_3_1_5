@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Form</title>
+</head>
+<body>
+<form th:method="PATCH" th:action="@{/admin/update-form}" th:object="${user}">
+  <input type="hidden" th:field="*{id}"/>
+  <label for="name">Enter name</label>
+  <input type="text" th:field="*{firstName}" id="name">
+  <br>
+  <label for="lastName">Enter surname</label>
+  <input type="text" th:field="*{lastName}" id="lastName">
+  <br>
+  <label for="email">Enter e-mail</label>
+  <input type="text" th:field="*{email}" id="email">
+  <br>
+  <label for="username">Enter username</label>
+  <input type="text" th:field="*{username}" id="username">
+  <br>
+  <label for="password">Enter password</label>
+  <input type="text" th:field="*{password}" id="password">
+  <br>
+  <label>Roles:
+  <input type="checkbox" name="roles"
+         th:each="role : ${roles}"
+         th:text="${role.name}"
+         th:value="${role.id}"
+         th:field="*{roles}"
+  />
+  </label>
+  <br>
+  <input type="submit" value="Update">
+</form>
+<br>
+<input type="button" value="Logout" onClick='location.href="/logout"'>
+</body>
+</html>

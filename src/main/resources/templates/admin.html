@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin panel</title>
+</head>
+<body>
+<h1 th:text="'Welcome back, ' + ${admininfo.getFirstName()} + '!'"></h1>
+<table>
+  <thead>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Surname</th>
+    <th>E-mail</th>
+    <th>Password</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="user: ${users}">
+    <td th:text="${user.getId()}"></td>
+    <td th:text="${user.getFirstName()}"></td>
+    <td th:text="${user.getLastName()}"></td>
+    <td th:text="${user.getEmail()}"></td>
+    <td th:text="${user.getPassword()}"></td>
+    <td><a type="button" th:href="@{admin/update-form/{id}(id=${user.getId()})}">Update</a></td>
+    <td><a type="button" th:href="@{admin/delete-user/{id}(id=${user.getId()})}">Delete</a></td>
+  </tr>
+  </tbody>
+</table>
+
+<br>
+
+<input type="button" value="Add" onClick='location.href="admin/add"'>
+<input type="button" value="Logout" onClick='location.href="/logout"'>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Panel</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/admin}" th:object="${user}">
+  <label for="name">Name</label>
+  <input type="text" th:field="*{firstName}" id="name">
+  <br>
+  <label for="lastName">Surname</label>
+  <input type="text" th:field="*{lastName}" id="lastName">
+  <br>
+  <label for="username">Username</label>
+  <input type="text" th:field="*{username}" id="username">
+  <br>
+  <label for="email">E-mail</label>
+  <input type="text" th:field="*{email}" id="email">
+  <br>
+  <label for="password">Password</label>
+  <input type="text" th:field="*{password}" id="password">
+  <br>
+  <label>Roles:
+    <input type="checkbox" name="roles"
+           th:each="role : ${roles}"
+           th:text="${role.name}"
+           th:value="${role.id}"
+           th:field="*{roles}"
+    />
+  </label>
+  <br>
+  <input type="submit" value="Add">
+</form>
+<br>
+<input type="button" value="Logout" onClick='location.href="/logout"'>
+</body>
+</html>
