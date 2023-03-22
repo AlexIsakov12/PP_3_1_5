@@ -6,27 +6,27 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 import java.security.Principal;
-import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
     private final RoleRepository roleRepository;
 
-    public AdminController(UserService userService, RoleRepository roleRepository) {
-        this.userService = userService;
+    public AdminController(UserServiceImpl userServiceImpl, RoleRepository roleRepository) {
+        this.userServiceImpl = userServiceImpl;
         this.roleRepository = roleRepository;
     }
 
     @GetMapping()
     public String index(Model model, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        model.addAttribute("users", userService.findAll());
+        User user = userServiceImpl.findByUsername(principal.getName());
+        model.addAttribute("users", userServiceImpl.findAll());
         model.addAttribute("admininfo", user);
         return "admin";
     }
@@ -38,27 +38,27 @@ public class AdminController {
         return "add";
     }
     @PostMapping()
-    public String create(@ModelAttribute("user") User user, @RequestParam("roles") List<Role> roles) {
-        userService.save(user, roles);
+    public String create(@ModelAttribute("user") User user, @RequestParam("roles") Set<Role> roles) {
+        userServiceImpl.save(user, roles);
         return "redirect:/admin";
     }
 
     @GetMapping("/update-form/{id}")
     public String getUserUpdateForm(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("user", userService.getUserById(id));
+        model.addAttribute("user", userServiceImpl.getUserById(id));
         model.addAttribute("roles", roleRepository.findAll());
         return "update-form";
     }
 
     @PostMapping("/update-form")
-    public String update(@ModelAttribute("user") User user, @RequestParam(value = "roles") List<Role> roles) {
-        userService.update(user, roles);
+    public String update(@ModelAttribute("user") User user, @RequestParam(value = "roles") Set<Role> roles) {
+        userServiceImpl.update(user, roles);
         return "redirect:/admin";
     }
 
     @GetMapping("/delete-user/{id}")
     public String delete(@PathVariable("id") long id) {
-        userService.delete(id);
+        userServiceImpl.delete(id);
         return "redirect:/admin";
     }
 
