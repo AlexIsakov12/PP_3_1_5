@@ -9,11 +9,19 @@ import java.util.List;
 import java.util.Set;
 
 public interface UserService extends UserDetailsService {
+
     UserDetails loadUserByUsername(String username);
+
     User findByUsername(String username);
+
     List<User> findAll();
+
     void save(User user, Set<Role> roles);
-    void update(User user, Set<Role> roles);
+
+    void update(Long id, User user, Set<Role> roles);
+
     void delete(Long id);
+
     User getUserById(Long id);
+
 }

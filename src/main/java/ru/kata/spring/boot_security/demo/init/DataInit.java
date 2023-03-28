@@ -1,4 +1,4 @@
-package ru.kata.spring.boot_security.demo.initialization;
+package ru.kata.spring.boot_security.demo.init;
 
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
@@ -29,5 +29,6 @@ public class DataInit {
 
         userService.save(user, userSet);
         userService.save(admin, adminSet);
+
     }
 }

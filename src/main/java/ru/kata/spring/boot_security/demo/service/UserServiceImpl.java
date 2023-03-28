@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -49,22 +50,16 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    // реализовать
-    public void update(User user, Set<Role> roles) {
-        user.setEmail(user.getEmail());
+    public void update(Long id, User user, Set<Role> roles) {
+        user.setId(id);
         user.setRoles(roles);
-        user.setUsername(user.getUsername());
-        user.setFirstName(user.getFirstName());
-        user.setLastName(user.getLastName());
-        user.setPassword(user.getPassword());
+        user.setPassword(userRepository.getUserById(id).getPassword());
         userRepository.save(user);
     }
 
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
-
-
 
     public User getUserById(Long id) {
         return userRepository.getUserById(id);

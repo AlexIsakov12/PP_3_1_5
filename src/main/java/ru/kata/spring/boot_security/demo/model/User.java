@@ -15,21 +15,29 @@ import java.util.Set;
 @Setter
 @Table(name = "users")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String username;
+
     private String firstName;
+
     private String lastName;
+
     private String email;
+
     private String password;
+
     @ManyToMany
     @JoinTable( name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+
     private Set<Role> roles;
+
     public User() {}
 
     public User(String username, String firstName, String lastName, String email, String password) {
@@ -38,6 +46,16 @@ public class User implements UserDetails {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+    }
+
+    public String getView() {
+        if (roles.contains(new Role(1L, "ROLE_USER")) && roles.contains(new Role(2L, "ROLE_ADMIN"))) {
+            return "ADMIN USER";
+        } else if (roles.contains(new Role(2L, "ROLE_ADMIN"))) {
+            return "ADMIN";
+        } else {
+            return "USER";
+        }
     }
 
     @Override
@@ -100,5 +118,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
 

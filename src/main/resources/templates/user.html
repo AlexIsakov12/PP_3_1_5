@@ -2,32 +2,65 @@
 <html xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin panel</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
-<body>
-<h1 th:text="'Welcome back, ' + ${userinfo.getFirstName()} + '!'"></h1>
-<table>
-    <thead>
-    <tr>
-        <th>Username</th>
-        <th>Name</th>
-        <th>Surname</th>
-        <th>E-mail</th>
-        <th>Password</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="user: ${userinfo}">
-        <td th:text="${userinfo.getUsername()}"></td>
-        <td th:text="${userinfo.getFirstName()}"></td>
-        <td th:text="${userinfo.getLastName()}"></td>
-        <td th:text="${userinfo.getEmail()}"></td>
-        <td th:text="${userinfo.getPassword()}"></td>
-    </tr>
-    </tbody>
-</table>
-
-<br>
-<input type="button" value="Logout" onClick='location.href="/logout"'>
-</body>
-</html>
+<body class="bg-light">
+<div class="container-fluid">
+    <div class="row bg-dark text-white">
+        <div class="col-md-12 px-0">
+            <nav class="navbar">
+        <span class="navbar-text" th:text="${userinfo.getEmail()} + ' with roles: ' + ${userinfo.getView()}">
+        </span>
+                <button class="btn btn-outline-secondary border-0" onclick="location.href='/logout'" href="/logout">Logout</button>
+            </nav>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-2 bg-white px-0">
+            <ul class="nav flex-column nav-pills">
+                <li id="side-item1" class="nav-item" th:if="${userinfo.getView().equals('ADMIN USER')}">
+                    <a class="nav-link" href="/admin">Admin</a>
+                </li>
+                <li id="side-item2" class="nav-item">
+                    <a class="nav-link active" href="/user">User</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-10 bg-light vh-100 px-4">
+            <h2 class="text-left">
+                User information page
+            </h2>
+                <div class="border bg-white">
+                    <div class="border-bottom bg-light px-4 py-3 mx-auto">
+                        <h5 class="m-0">
+                            About user
+                        </h5>
+                    </div>
+                    <div class="p-4">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Surname</th>
+                                <th scope="col">E-mail</th>
+                                <th scope="col">Roles</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="user: ${userinfo}">
+                                <td th:text="${user.getId()}"></td>
+                                <td th:text="${user.getFirstName()}"></td>
+                                <td th:text="${user.getLastName()}"></td>
+                                <td th:text="${user.getEmail()}"></td>
+                                <td th:text="${user.getView()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
