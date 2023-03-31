@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.repository.RoleRepository;
+import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
@@ -16,17 +16,17 @@ import java.util.Set;
 public class AdminController {
 
     private final UserService userService;
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
-    public AdminController(UserService userService, RoleRepository roleRepository) {
+    public AdminController(UserService userService,RoleService roleService) {
         this.userService = userService;
-        this.roleRepository = roleRepository;
+        this.roleService = roleService;
     }
 
     @GetMapping()
     public String index(Model model, Principal principal) {
         model.addAttribute("newUser", new User());
-        model.addAttribute("allRoles", roleRepository.findAll());
+        model.addAttribute("allRoles", roleService.findAll());
         model.addAttribute("allUsers", userService.findAll());
         model.addAttribute("user", userService.findByUsername(principal.getName()));
         return "admin";
@@ -41,7 +41,7 @@ public class AdminController {
     @GetMapping("/{id}")
     public String getUser(Model model, @PathVariable("id") Long id) {
         model.addAttribute("user", userService.getUserById(id));
-        model.addAttribute("roles", roleRepository.findAll());
+        model.addAttribute("roles", roleService.findAll());
         return "redirect:/admin";
     }
 
