@@ -21,14 +21,13 @@ public class DataInit {
         adminSet.add(new Role(1L, "ROLE_USER"));
         adminSet.add(new Role(2L, "ROLE_ADMIN"));
 
-        User user = new User("user", "Ivan", "Ivanov", "user@mail.ru", "user");
-        User admin = new User("admin", "Admin", "Adminov", "admin@mail.ru", "admin");
+        User user = new User("user", "Ivan", "Ivanov", "user@mail.ru", "user", userSet);
+        User admin = new User("admin", "Admin", "Adminov", "admin@mail.ru", "admin", adminSet);
 
         roleRepository.save(userRole);
         roleRepository.save(adminRole);
 
-        userService.save(user, userSet);
-        userService.save(admin, adminSet);
-
+        userService.save(user);
+        userService.save(admin);
     }
 }

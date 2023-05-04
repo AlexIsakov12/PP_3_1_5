@@ -44,16 +44,12 @@ public class UserServiceImpl implements UserService {
        return userRepository.findAll();
     }
 
-    public void save(User user, Set<Role> roles) {
-        user.setRoles(roles);
-        user.setPassword(user.getPassword());
+    public void save(User user) {
         userRepository.save(user);
     }
 
-    public void update(Long id, User user, Set<Role> roles) {
-        user.setId(id);
-        user.setRoles(roles);
-        user.setPassword(userRepository.getUserById(id).getPassword());
+    public void update(User user) {
+        user.setPassword(user.getPassword());
         userRepository.save(user);
     }
 
