@@ -68,6 +68,9 @@ newUserForm.addEventListener('submit', e => {
         .then(response => response.json())
         .then(data => showTable(data))
         .then(newUserForm.reset())
+        .then(() => {
+            $('.nav-tabs a:first').tab('show')
+        })
         .then(loadTable)
         .catch(error => console.log(error))
 })
